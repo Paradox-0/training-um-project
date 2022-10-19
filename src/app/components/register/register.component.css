@@ -1,0 +1,112 @@
+.content-container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(254, 254, 254);
+}
+
+.card {
+    max-width: 400px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 0.5px solid rgba(128, 128, 128, 0.266);
+    border-radius: 8px;
+}
+
+
+.registerBtn {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.registerBtn button {
+    width: 100px;
+    font-size: 12px;
+}
+
+.navigation-link {
+    text-align: center;
+    margin-top: 20px;
+}
+
+input {
+    width: 90%;
+}
+
+/* @media (max-width: 390px) {
+    input[type=email] {
+        width: 100%
+    }
+} */
+
+@media(min-width: 390px) {
+
+    form clr-input-container,
+    form clr-radio-container,
+    form clr-date-container,
+    Form clr-select-container {
+        padding-left: 20px
+    }
+}
+
+#hobby {
+    border-radius: 50%;
+    /* font-size: 16px; */
+    /* margin-left: 45%; */
+    position: absolute;
+    left: 360px;
+    top: 450px;
+}
+
+#hobbyy {
+    border-radius: 50%;
+    font-size: 16px;
+    position: absolute;
+    left: 360px;
+    top: 495px;
+}
+
+/*error msg styling of email and mobile if both are left empty */
+.emailMobileError {
+    text-align: center;
+}
+
+.emailMobileError p {
+    color: red;
+    border: 1px solid red;
+    background-color: rgba(255, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+
+/* custom input type file styling */
+
+div.file-upload {
+    /* position: absolute; */
+
+    position: relative;
+    width: 230px;
+    padding: 3px;
+    padding-right: 0;
+    display: inline-block;
+    margin-left: 140px;
+    margin-top: -60px;
+}
+
+.upload-btn {
+    background-color: rgb(9, 77, 249);
+    color: white;
+    border: 1px solid rgb(9, 77, 249);
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    margin-left: 8px;
+}
+
+div.file-upload span {
+    font-size: 11px;
+    color: #8c8c8c;
+}

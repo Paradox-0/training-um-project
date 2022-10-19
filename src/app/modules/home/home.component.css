@@ -1,0 +1,25 @@
+/* .main {
+    display: flex;
+    flex-direction: column; 
+    min-height: 100vh;
+} */
+
+#header {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    z-index: 99;
+}
+
+#footer {
+    position: fixed;
+    text-align: center;
+    background-color: rgb(5, 27, 46);
+    width: 100%;
+    bottom: 0;
+}
+
+#footer p {
+    color: white;
+    margin: 1px;
+}

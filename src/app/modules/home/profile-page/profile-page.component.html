@@ -1,0 +1,119 @@
+<div class="master">
+    <div class="main">
+        <!-- <section class="profilePicture">
+        <img [src]="profilePic" alt="user profile picture">
+    </section> -->
+        <div id="profileForm">
+            <form clrForm [formGroup]="profilePageForm" (ngSubmit)="onProfileUpdate()">
+
+                <!-- profile picture -->
+                <clr-input-container>
+                    <input clrinput type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload
+                        style="display:none;" accept=".png, .jpg, .jpeg" size="2000000" formControlName="profilephoto">
+                </clr-input-container>
+                <section class="profilePicture">
+                    <img [src]="profilePic" alt="user profile picture" (click)="fileUpload.click()">
+                </section>
+
+                <!-- Username -->
+                <clr-input-container>
+                    <label class="clr-col-4 clr-col-md-2 ">Username:</label>
+                    <input clrInput type="text" formControlName="userName" placeholder="Username"
+                        class="clr-col-8 clr-col-md-8" />
+                    <clr-control-error *clrIfError="'required'">Username is required</clr-control-error>
+                    <clr-control-error *clrIfError="'minlength'">Minimum length must be 4 characters</clr-control-error>
+                    <clr-control-error *clrIfError="'maxlength'">Maximum length must be 50 characters
+                    </clr-control-error>
+                    <clr-control-error *clrIfError="'pattern'">Username should only contain characters and spaces
+                    </clr-control-error>
+                </clr-input-container>
+
+                <!-- mobile number -->
+                <clr-input-container>
+                    <label class="clr-col-4 clr-col-md-2 ">Phone Number:</label>
+                    <input clrInput type="tel" formControlName="phone" placeholder="Phone Number"
+                        class="clr-col-8 clr-col-md-8" />
+                    <clr-control-error *clrIfError="'minlength'">Phone Number should only contain 10 digits, without
+                        country
+                        code</clr-control-error>
+                    <clr-control-error *clrIfError="'maxlength'">Phone Number should only contain 10 digits, without
+                        country
+                        code</clr-control-error>
+                </clr-input-container>
+
+                <!-- Email ID -->
+                <clr-input-container>
+                    <label class="clr-col-4 clr-col-md-2 ">Email:</label>
+                    <input clrInput type="email" formControlName="email" placeholder="Email"
+                        class="clr-col-8 clr-col-md-8" />
+                    <clr-control-error *clrIfError="'email'">Email is invalid</clr-control-error>
+                    <!-- <clr-control-error *clrIfError="'required'">AT leaset one value required</clr-control-error> -->
+                </clr-input-container>
+
+                <!-- Gender -->
+                <clr-radio-container>
+                    <label class="clr-col-4 clr-col-md-2 ">Gender:</label>
+                    <clr-radio-wrapper>
+                        <input type="radio" clrRadio required value="male" formControlName="gender"
+                            class="clr-col-8 clr-col-md-8" />
+                        <label>Male</label>
+                    </clr-radio-wrapper>
+                    <clr-radio-wrapper>
+                        <input type="radio" clrRadio required value="Female" formControlName="gender"
+                            class="clr-col-8 clr-col-md-8" />
+                        <label>Female</label>
+                    </clr-radio-wrapper>
+                    <clr-radio-wrapper>
+                        <input type="radio" clrRadio required value="Others" formControlName="gender" />
+                        <label>Others</label>
+                    </clr-radio-wrapper>
+                </clr-radio-container>
+
+                <!-- Date of Birth -->
+                <clr-date-container>
+                    <label class="clr-col-4 clr-col-md-2 ">DOB:</label>
+                    <input type="date" clrDate formControlName="dob" class="clr-col-8 clr-col-md-8">
+                    <clr-control-error *clrIfError="'ageLt'">User age must be 18 year</clr-control-error>
+                    <clr-control-error *clrIfError="'ageGt'">User age must be below 70 year</clr-control-error>
+                </clr-date-container>
+
+                <!-- User Role -->
+                <clr-select-container>
+                    <label class="clr-col-4 clr-col-md-2 ">Role:</label>
+                    <select clrSelect formControlName="role" class="clr-col-8 clr-col-md-8">
+                        <option [value]="role" *ngFor="let role of roles">{{role}}</option>
+                    </select>
+                    <clr-control-error>This field is required!</clr-control-error>
+                </clr-select-container>
+
+                <!-- Hobbies -->
+                <div id="hobbies">
+                    <div formArrayName="hobbies">
+
+                        <clr-input-container *ngFor="let hobby of controls; let i = index">
+                            <label class="clr-col-4 clr-col-md-2">Hobbies:</label>
+                            <input clrInput type="text" [formControlName]="i" placeholder="hobbies"
+                                class="clr-col-8 clr-col-md-8" />
+                            <clr-control-helper>Maximum 5 hobbies are allowed</clr-control-helper>
+                        </clr-input-container>
+                        <button type="button" class="btn btn-icon btn-primary tooltip tooltip-xs tooltip-left"
+                            (click)="onAddHobby()" id="hobby">
+                            + <span class="tooltip-content">Add hobby</span>
+                        </button>
+                        <button type="button" class="btn btn-icon btn-danger tooltip tooltip-xs tooltip-right"
+                            (click)="deleteHobby()" id="hobbyy" *ngIf="gt>1">
+                            -
+                            <span class="tooltip-content">Remove hobby</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!--Update button-->
+                <div class="updateBtn">
+                    <button class="btn btn-primary" type="submit">Update</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

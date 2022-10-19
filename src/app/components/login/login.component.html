@@ -1,0 +1,29 @@
+<div class="content-container">
+    <div class="card">
+        <h3 class="card-header">Login</h3>
+        <h4 class="card-title">Sign in to continue</h4>
+        <clr-icon shape="user" class="is-solid" size="48"></clr-icon>
+        <form clrForm [formGroup]="loginForm" (ngSubmit)="onLoginSubmit()">
+
+            <clr-input-container>
+                <label class="clr-col-4 clr-col-md-4 ">Email/ Phone:</label>
+                <input clrInput type="email" formControlName="email" placeholder="Email/ Phone"
+                    class="clr-col-8 clr-col-md-8" />
+                <clr-control-error *clrIfError="'required'">This is a required field</clr-control-error>
+            </clr-input-container>
+            <clr-password-container>
+                <label class="clr-col-4 clr-col-md-4 ">Password:</label>
+                <input clrPassword placeholder="Password" formControlName="password" class="clr-col-8 clr-col-md-8 " />
+                <clr-control-error *clrIfError="'required'">Password is required</clr-control-error>
+            </clr-password-container>
+
+            <div class="loginBtn">
+                <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+            </div>
+
+            <div class="navigation-link">
+                <b>Don't have an account?</b> <a [routerLink]="['/register']"><b> Create new Account</b></a>
+            </div>
+        </form>
+    </div>
+</div>

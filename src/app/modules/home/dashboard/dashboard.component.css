@@ -1,0 +1,62 @@
+.main {
+    margin-right: 25px;
+    margin-left: 25px;
+}
+
+.chart-card-container {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+
+.bookCard,
+.chart {
+    max-width: 700px;
+
+    /* border: 1px solid rgb(21, 1, 73); */
+    border-radius: 10px;
+
+}
+
+h4.card-title {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-header,
+.card-block {
+    text-align: center;
+}
+
+.card-header {
+    /* background-color: rgba(24, 2, 66, 0.793); */
+    background-color: #00364df8;
+    color: white;
+    border-radius: 10px;
+}
+
+#booksTable {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    /* box-shadow: 0 -1px 3px 0px black; */
+}
+
+/* .datagrid-column {
+    background-color: #00364df8;
+}
+ */
+clr-datagrid {
+    border-radius: 10px;
+    background-color: #00364df8;
+}
+
+/* 
+clr-control-helper {
+    color: black;
+} */
+
+input {
+    width: 200px;
+}

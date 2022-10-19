@@ -1,0 +1,42 @@
+<!-- <div class="main-container"> -->
+<header class="header-6">
+
+    <div class="branding">
+        <a [routerLink]="['/home']" class="nav-link">
+            <span class="title">MagicBooKs</span>
+        </a>
+    </div>
+
+    <div class="header-nav">
+        <a [routerLink]="['dashboard']" class="nav-link nav-text" [ngClass]="{active: activeDashboard}">Dashboard</a>
+    </div>
+
+    <div class="header-actions">
+        <!-- <a [routerLink]="['profile']" class="nav-link nav-icon-text">
+                <img [src]="avatar" id="userimage" />
+                <span class="nav-text">{{username}} ({{role}})</span>
+            </a> -->
+
+        <clr-dropdown>
+            <button class="btn btn-link" clrDropdownTrigger>
+                <img [src]="avatar" id="userimage" />&nbsp;
+                <span class="nav-text">{{username}} ({{role}})</span>
+                <cds-icon shape="angle" direction="down"></cds-icon>
+            </button>
+            <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
+
+                <div clrDropdownItem>
+                    <a [routerLink]="['profile']" class="profilePage">
+                        Profile</a>
+                </div>
+
+
+                <div class="dropdown-divider" role="separator" aria-hidden="true"></div>
+
+                <div clrDropdownItem (click)="logout()">Logout</div>
+            </clr-dropdown-menu>
+        </clr-dropdown>
+    </div>
+</header>
+
+<!-- </div> -->

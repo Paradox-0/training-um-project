@@ -1,0 +1,79 @@
+.main {
+    max-width: 800px;
+    border: 1px solid rgb(27, 1, 74);
+    margin: auto;
+    border-radius: 5px;
+    margin-top: 30px;
+    box-shadow: 0 1px 2px black;
+    margin-bottom: 100px;
+    background: radial-gradient(#ffffff, #e8e7e7);
+
+    /* background-color: #fff;
+    background-image:
+        linear-gradient(90deg, transparent 79px, #abced4 79px, #abced4 81px, transparent 81px),
+        linear-gradient(#eee .1em, transparent .1em);
+    background-size: 100% 1.8em; */
+
+
+}
+
+
+
+#profileForm {
+    margin-left: 200px;
+}
+
+.profilePicture {
+    /* text-align: center; */
+    margin-left: 140px;
+    padding: 3px;
+    margin-top: 8px;
+    margin-bottom: 40px;
+}
+
+.profilePicture img {
+    width: 140px;
+    height: 140px;
+    border: 1px solid black;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.profilePicture img:hover {
+    opacity: 0.8;
+}
+
+input {
+    width: 80%;
+}
+
+#hobby {
+    border-radius: 50%;
+    /* font-size: 16px; */
+    /* margin-left: 45%; */
+    position: relative;
+    left: 70%;
+    margin-top: -50px;
+}
+
+#hobbyy {
+    border-radius: 50%;
+    font-size: 16px;
+    position: relative;
+    left: 70%;
+    margin-top: -50px;
+}
+
+@media (max-width: 768px) {
+    #profileForm {
+        margin-left: 10%;
+    }
+}
+
+.updateBtn {
+    margin-top: 20px;
+}
+
+.updateBtn button {
+    margin-left: 28%;
+}

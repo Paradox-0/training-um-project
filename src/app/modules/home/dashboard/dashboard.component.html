@@ -1,0 +1,127 @@
+<div class="main">
+
+    <div class="chart-card-container">
+        <!-- The card for showing total no. of books and other details from api -->
+        <div class="card bookCard ">
+            <h3 class="card-header"><b> Books Details</b></h3>
+            <div class="card-block">
+                <h4 class="card-title">Total number of Books: &nbsp; <span class="card-text"> {{totalBooks}}</span>
+                </h4>
+                <div class="card-divider"></div>
+                <h4 class="card-title">Total number of Authors:&nbsp; <span class="card-text"> {{totalAuthors}}</span>
+                </h4>
+                <div class="card-divider"></div>
+                <h4 class="card-title">Books written in last 1 year:&nbsp; <span
+                        class="card-text">{{booksWrittenInLast1Y}}</span> </h4>
+            </div>
+        </div>
+
+        <!-- The bar chart for showing category and their count -->
+        <div class="card chart">
+            <h3 class="card-header">Bar Chart</h3>
+            <div class="card-block">
+                <!-- <h4 class="card-title">Block</h4> -->
+
+                <app-bar-chart></app-bar-chart>
+
+                <!-- <p>Here comes the bar chart</p> -->
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Books table  -->
+    <div id="booksTable">
+        <clr-datagrid>
+            <!-- table column names -->
+            <clr-dg-column [clrDgField]="'booksrefno'" [clrDgColType]="'number'">Book Ref. no.</clr-dg-column>
+            <clr-dg-column [clrDgField]="'title'">Title (Volume)</clr-dg-column>
+            <clr-dg-column [clrDgField]="'author'">Authors</clr-dg-column>
+            <clr-dg-column [clrDgField]="'category'">Category (Sub-Category)</clr-dg-column>
+            <clr-dg-column [clrDgField]="'totalpages'" [clrDgColType]="'number'">Total Pages</clr-dg-column>
+            <clr-dg-column [clrDgField]="'actions'">Actions</clr-dg-column>
+
+
+            <!-- table column values row vise -->
+            <clr-dg-row *clrDgItems="let book of bookDatabase;let i=index">
+                <!-- book ref no. -->
+                <clr-dg-cell>{{book.booksrefno}}</clr-dg-cell>
+
+                <!-- title and volume -->
+                <clr-dg-cell>{{book.title}} ({{book.volume}})</clr-dg-cell>
+
+
+                <!-- author  -->
+                <clr-dg-cell>{{book.author}}</clr-dg-cell>
+
+                <!-- category and sub-category -->
+                <clr-dg-cell>{{book.category}}</clr-dg-cell>
+
+                <!-- total pages -->
+                <clr-dg-cell>{{book.totalpages}}</clr-dg-cell>
+
+                <!-- actions -->
+                <clr-dg-cell>
+                    <button class="btn btn-primary btn-icon" (click)="copyBook(i)">
+                        <clr-icon shape="copy"></clr-icon>
+                    </button>
+                    <button class="btn btn-danger btn-icon" (click)="deleteBook(i)">
+                        <clr-icon shape="trash"></clr-icon>
+                    </button>
+                </clr-dg-cell>
+            </clr-dg-row>
+            <clr-dg-row>
+            </clr-dg-row>
+
+            <!-- pagination -->
+            <clr-dg-footer>
+                <clr-dg-pagination #pagination [clrDgPageSize]="5">
+                    <clr-dg-page-size [clrPageSizeOptions]="[5,10,20,50,100]">Books per page</clr-dg-page-size>
+                    {{pagination.firstItem + 1}} - {{pagination.lastItem + 1}}
+                    of {{pagination.totalItems}} books
+                </clr-dg-pagination>
+            </clr-dg-footer>
+        </clr-datagrid>
+    </div>
+
+</div>
+
+
+<!-- modal for book delete -->
+<clr-modal [(clrModalOpen)]="alertFordeleteBook" [clrModalSize]="'md'">
+    <h3 class="modal-title">Alert</h3>
+    <div class="modal-body">
+        <div class="alert alert-danger" role="alert">
+            <div class="alert-items">
+                <div class="alert-item static">
+                    <div class="alert-icon-wrapper">
+                        <cds-icon class="alert-icon" shape="exclamation-circle"></cds-icon>
+                    </div>
+                    <span class="alert-text">
+                        You can not delete lower volume first.
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="alertFordeleteBook=false">Ok</button>
+    </div>
+</clr-modal>
+
+
+<!-- Modal for copying book -->
+<clr-modal [(clrModalOpen)]="forCopyingBook" [clrModalSize]="'md'">
+    <h3 class="modal-title">Enter the Number of pages in New Volume</h3>
+    <div class="modal-body">
+        <form class="clr-form" [formGroup]="copyBookForm">
+            <input type="number" placeholder="Enter total Pages here" class="clr-input" formControlName="pages"
+                #copyForm min="50" max="500" />
+            <clr-control-helper>Min. 50, Max. 500 pages</clr-control-helper>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-warning" (click)="forCopyingBook = false">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="copyBookData(copyForm)">Add</button>
+    </div>
+</clr-modal>
