@@ -62,10 +62,19 @@ export class ProfilePageComponent implements OnInit {
     const file: File = event.target.files[0];
     if (file) {
 
-      this.fileName = file.name;
-      const formData = new FormData();
-
-      formData.append("thumbnail", file);
+      // this.fileName = file.name;
+      //const formData = new FormData();
+      console.log(file);
+      //formData.append("thumbnail", file);
+      this.profilePageForm.patchValue({
+        'profilephoto': file
+      })
+      console.log(this.profilePageForm.value);
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.profilePic = reader.result as string;
+      }
+      reader.readAsDataURL(file);
     }
   }
 

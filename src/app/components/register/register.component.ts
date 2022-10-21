@@ -14,7 +14,8 @@ import { PasswordService } from 'src/app/services/passwordGenerator.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   emailMobileRequired = false;
-  roles = ['Admin', 'User'];
+  roles: any = ['Admin', 'User'];
+  //roles: any;
   gt = 1;
   registerSubscription: Subscription;
   registrationValues: any;
@@ -23,6 +24,10 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {
     // push the user role value into the rules array from api service
+    this.authService.fetchUserRoles().subscribe(userRoles => {
+      this.roles.push(userRoles);
+      console.log(userRoles);
+    })
 
     this.registerForm = new FormGroup({
 
@@ -31,7 +36,7 @@ export class RegisterComponent implements OnInit {
       'email': new FormControl(null, [Validators.email]),
       'gender': new FormControl('male'),
       'dob': new FormControl(null, [Validators.required, this.ageValidatorService.ageValidator()]),
-      'role': new FormControl(null, [Validators.required]),
+      'role': new FormControl('Admin', [Validators.required]),
       'hobbies': new FormArray([new FormControl('')]),
       'profilephoto': new FormControl(null)
     })
@@ -120,14 +125,19 @@ export class RegisterComponent implements OnInit {
 
   fileName = "";
   onFileSelected(event: any) {
-    const file: File = event.target.files[0];
+    const file: File = (event.target as HTMLInputElement).files[0];
+    // console.log(file);
+    //console.log(event.target.files);
     if (file) {
 
       this.fileName = file.name;
 
-      const formData = new FormData();
+      // const formData = new FormData();
+      // formData.append("thumbnail", file, this.fileName);
 
-      formData.append("thumbnail", file);
+      this.registerForm.patchValue({
+        'profilephoto': file
+      });
     }
   }
 }

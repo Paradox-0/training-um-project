@@ -110,7 +110,7 @@
             <clr-input-container>
                 <label class="clr-col-4 clr-col-md-4 ">Upload Profile Pic:</label>
                 <input clrinput type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload
-                    style="display:none;" accept=".png, .jpg, .jpeg" size="2000000" formControlName="profilephoto">
+                    style="display:none;" accept=".png, .jpg, .jpeg" size="2000000">
             </clr-input-container>
             <div class="file-upload">
                 {{fileName || "Upload Profile pic"}}

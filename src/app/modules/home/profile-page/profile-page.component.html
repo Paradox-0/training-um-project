@@ -9,7 +9,7 @@
                 <!-- profile picture -->
                 <clr-input-container>
                     <input clrinput type="file" class="file-input" (change)="onFileSelected($event)" #fileUpload
-                        style="display:none;" accept=".png, .jpg, .jpeg" size="2000000" formControlName="profilephoto">
+                        style="display:none;" accept=".png, .jpg, .jpeg" size="2000000">
                 </clr-input-container>
                 <section class="profilePicture">
                     <img [src]="profilePic" alt="user profile picture" (click)="fileUpload.click()">

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActiveRouteService } from '../active-route.service';
 
@@ -9,12 +10,13 @@ import { ActiveRouteService } from '../active-route.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   avatar: string = "../../../assets/defaultProfile.png";
   username: string = "Paradox";
   role: string = "Admin";
   photo: string;
   activeDashboard: any;
+  activeRouteServiceSubscription: Subscription;
 
   constructor(private router: Router, private authService: AuthService, private activeRouteService: ActiveRouteService) { }
 
@@ -22,7 +24,7 @@ export class HeaderComponent implements OnInit {
     //this.avatar  = this.authService.profilePic;
 
     //taking activeDashboard value from dashboard through activeRouteService
-    this.activeRouteService.activeDashboard.subscribe(activity => {
+    this.activeRouteServiceSubscription = this.activeRouteService.activeDashboard.subscribe(activity => {
       this.activeDashboard = activity;
     })
   }
@@ -32,6 +34,11 @@ export class HeaderComponent implements OnInit {
     console.log("you are logging out");
     //change afterwards so that user can logout
     this.router.navigate(['/login']);
+  }
+
+
+  ngOnDestroy(): void {
+    this.activeRouteServiceSubscription.unsubscribe();
   }
 
 }

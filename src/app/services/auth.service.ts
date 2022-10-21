@@ -29,4 +29,8 @@ export class AuthService {
     register() {
         this.isRegistered = true;
     }
+
+    fetchUserRoles() {
+        return this.http.get('https://localhost:44314/api/Roles')
+    }
 }

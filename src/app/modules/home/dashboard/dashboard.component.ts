@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { BooksDetailService } from 'src/app/utility/books-details.service';
 import { ActiveRouteService } from '../active-route.service';
 import { ToastrService } from 'ngx-toastr';
+import { BookDataBaseService } from 'src/app/services/dashboard-services/bookDatabase.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   copyNoOfPages: number;
   newBook: any;
   copyBookForm: FormGroup;
+  bookDataBaseSubscription: Subscription;
   // tableColumns = ['Book Ref.no.', 'Title (Volume)', 'Authors', 'Category (Sub-Category)', 'Total Pages', 'Actions'];
 
   // alertFordeleteBook :- this property is for opening and closing of modal when deleting book.
@@ -35,7 +37,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     { booksrefno: 1, title: 'The Dhandho', volume: 3, author: 'Mohnish pabrai', category: 'Finance', totalpages: 150 }
   ]
 
-  constructor(private booksDetailService: BooksDetailService, private activeRouteService: ActiveRouteService, private toastr: ToastrService) { }
+  constructor(private activeRouteService: ActiveRouteService, private toastr: ToastrService, private bookDataBaseService: BookDataBaseService) { }
 
   ngOnInit(): void {
 
@@ -44,11 +46,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
     })
 
     // fetch the books details from api
+
+    this.bookDataBaseSubscription = this.bookDataBaseService.fetchBookDataBase().subscribe(bookDetails => {
+      // this.totalBooks = //bookDetails.variable nameWhich is storing total books;
+      //  this.totalAuthors = //bookDetails.variable nameWhich is storing total Authors;
+      //  this.booksWrittenInLast1Y = //bookDetails.variable name which is storing books written in last 1 year;
+    })
+
     this.activeRouteService.activeDashboard.next(true);
+
   }
 
   ngOnDestroy() {
     this.activeRouteService.activeDashboard.next(false);
+    this.bookDataBaseSubscription.unsubscribe();
   }
 
 

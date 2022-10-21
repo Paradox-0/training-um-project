@@ -10,6 +10,7 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { BarChartComponent } from './dashboard/bar-chart/bar-chart.component';
 import { NgChartsModule } from 'ng2-charts';
+import { RenderTableComponent } from './dashboard/render-table/render-table.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { NgChartsModule } from 'ng2-charts';
     HeaderComponent,
     ProfilePageComponent,
     DashboardComponent,
-    BarChartComponent
+    BarChartComponent,
+    RenderTableComponent
   ],
   imports: [
     CommonModule,
