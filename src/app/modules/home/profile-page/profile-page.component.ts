@@ -8,7 +8,8 @@ import { AgeValidatorService } from 'src/app/services/ageValidator.service';
   styleUrls: ['./profile-page.component.css']
 })
 export class ProfilePageComponent implements OnInit {
-  profilePic: string = '../../../assets/defaultProfile.png';
+  //profilePic: string = '../../../assets/defaultProfile.png';
+  profilePic: string = 'assets/defaultProfile.png';
   profilePageForm: FormGroup;
   gt = 1;
   roles = ['User'];
@@ -62,12 +63,13 @@ export class ProfilePageComponent implements OnInit {
     const file: File = event.target.files[0];
     if (file) {
 
-      // this.fileName = file.name;
-      //const formData = new FormData();
+      this.fileName = file.name;
+      const formData = new FormData();
       console.log(file);
-      //formData.append("thumbnail", file);
+      formData.append("profilePic", file, this.fileName);
       this.profilePageForm.patchValue({
-        'profilephoto': file
+        // 'profilephoto': file
+        'profilephoto': formData
       })
       console.log(this.profilePageForm.value);
       const reader = new FileReader();

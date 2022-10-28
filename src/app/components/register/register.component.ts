@@ -5,6 +5,8 @@ import { Subscription } from 'rxjs';
 import { AgeValidatorService } from 'src/app/services/ageValidator.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { PasswordService } from 'src/app/services/passwordGenerator.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Component({
   selector: 'app-register',
@@ -14,18 +16,18 @@ import { PasswordService } from 'src/app/services/passwordGenerator.service';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   emailMobileRequired = false;
-  roles: any = ['Admin', 'User'];
+  roles: any;
   //roles: any;
   gt = 1;
   registerSubscription: Subscription;
   registrationValues: any;
 
-  constructor(private router: Router, private authService: AuthService, private passwordService: PasswordService, private ageValidatorService: AgeValidatorService) { }
+  constructor(private router: Router, private authService: AuthService, private passwordService: PasswordService, private ageValidatorService: AgeValidatorService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // push the user role value into the rules array from api service
     this.authService.fetchUserRoles().subscribe(userRoles => {
-      this.roles.push(userRoles);
+      this.roles = userRoles;
       console.log(userRoles);
     })
 
@@ -36,7 +38,7 @@ export class RegisterComponent implements OnInit {
       'email': new FormControl(null, [Validators.email]),
       'gender': new FormControl('male'),
       'dob': new FormControl(null, [Validators.required, this.ageValidatorService.ageValidator()]),
-      'role': new FormControl('Admin', [Validators.required]),
+      'role': new FormControl(2, [Validators.required]),
       'hobbies': new FormArray([new FormControl('')]),
       'profilephoto': new FormControl(null)
     })
@@ -59,7 +61,61 @@ export class RegisterComponent implements OnInit {
         this.registrationValues.password = pass;
         console.log(this.registrationValues);
       })
-      this.router.navigate(['/password'])
+      //this.registrationValues.UserId = '1';
+      this.registrationValues.hobbies = 'nthng';
+      //changing date format to d/m/yyyy
+      let dd = this.registrationValues.dob.split('/');
+      let temp = dd[1];
+      dd[1] = dd[0];
+      dd[0] = temp;
+      console.log(dd.join("/"));
+      //FormData api 
+      const formData = new FormData();
+      let userId = '1';
+      formData.append("UserId", userId);
+
+      formData.append("UserName", this.registrationValues.userName);
+
+      formData.append("MobileNo", this.registrationValues.phone);
+
+      formData.append("Email", this.registrationValues.email);
+
+      formData.append("Gender", this.registrationValues.gender);
+
+      formData.append("DateOfBirth", dd);
+
+      formData.append("Hobbies", this.registrationValues.hobbies);
+
+      formData.append("Profile_Pic", this.registrationValues.profilephoto);
+
+      formData.append("Pword", this.registrationValues.password);
+
+      formData.append("RoleId", this.registrationValues.role);
+
+      console.log(formData);
+      for (var pair of formData.entries()) {
+        console.log(pair[0] + ' - ' + pair[1]);
+      }
+      //sending user registration request
+      this.authService.register(formData).subscribe({
+        next: (response) => {
+          console.log(response);
+          //toastr for notifying user 
+          this.toastr.success('Successfully', 'You have Registered', {
+            timeOut: 3000,
+            positionClass: 'toast-top-center',
+            newestOnTop: true
+          });
+          this.router.navigate(['/password'])
+        },
+        error: (e) => {
+          console.error(e);
+          console.log('error_match');
+          alert('error occured')
+        }
+      })
+      //redirecting user to password page
+      //this.router.navigate(['/password'])
     }
     //
     // let birthdate = this.registerForm.value.dob;
@@ -140,4 +196,8 @@ export class RegisterComponent implements OnInit {
       });
     }
   }
+
+
+
+
 }

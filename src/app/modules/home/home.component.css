@@ -8,7 +8,7 @@
     position: sticky;
     top: 0;
     width: 100%;
-    z-index: 99;
+    z-index: 999;
 }
 
 #footer {
@@ -17,6 +17,7 @@
     background-color: rgb(5, 27, 46);
     width: 100%;
     bottom: 0;
+    z-index: 999;
 }
 
 #footer p {

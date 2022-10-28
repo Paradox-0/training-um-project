@@ -67,7 +67,7 @@
             <clr-select-container>
                 <label class="clr-col-4 clr-col-md-4 ">Role:</label>
                 <select clrSelect formControlName="role" class="clr-col-8 clr-col-md-8">
-                    <option [value]="role" *ngFor="let role of roles">{{role}}</option>
+                    <option [value]="role.roleId" *ngFor="let role of roles">{{role.roleName}}</option>
                 </select>
                 <clr-control-error>This field is required!</clr-control-error>
             </clr-select-container>
@@ -106,6 +106,19 @@
 
 
             <!-- Custom profile pic btn -->
+
+            <!-- <clr-input-container>
+                <label class="clr-col-4 clr-col-md-4 ">Upload Profile Pic:</label>
+                <input clrinput type="file" formControlName="profilephoto" class="file-input" #fileUpload
+                    style="display:none;" accept=".png, .jpg, .jpeg" size="2000000">
+            </clr-input-container>
+            <div class="file-upload">
+                {{fileName || "Upload Profile pic"}}
+                <button class="upload-btn" (click)="fileUpload.click()" type="button">
+                    Upload Pic
+                </button>
+                <span>Max. file size 2mb (jpg/jpeg/png)</span>
+            </div> -->
 
             <clr-input-container>
                 <label class="clr-col-4 clr-col-md-4 ">Upload Profile Pic:</label>

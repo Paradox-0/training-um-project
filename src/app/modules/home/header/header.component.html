@@ -25,10 +25,14 @@
             </button>
             <clr-dropdown-menu clrPosition="bottom-right" *clrIfOpen>
 
-                <div clrDropdownItem>
+                <!-- <div clrDropdownItem>
                     <a [routerLink]="['profile']" class="profilePage">
                         Profile</a>
+                </div> -->
+                <div clrDropdownItem (click)="goToProfilePage()">
+                    Profile
                 </div>
+
 
 
                 <div class="dropdown-divider" role="separator" aria-hidden="true"></div>

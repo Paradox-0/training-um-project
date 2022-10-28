@@ -46,6 +46,7 @@ export class RenderTableComponent implements OnInit, OnDestroy {
     // fetching books data from BookDataBaseService
     this.bookDataBaseSubscription = this.bookDataBaseService.fetchBookDataBase().subscribe(booksData => {
       this.booksData = booksData;
+      this.total = 10;
       console.log(booksData);
     })
   }

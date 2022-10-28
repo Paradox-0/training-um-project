@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
@@ -13,7 +13,7 @@ interface ResponseData {
 })
 export class AuthService {
     isAuthenticated = false;
-    isRegistered = true;
+    isRegistered = true; //this property is for canActivate but now we do not require this
     profilePic: string;
 
     constructor(private http: HttpClient) { }
@@ -26,11 +26,12 @@ export class AuthService {
         //this.profilePic = "https://cdn.dribbble.com/users/1162077/screenshots/7475318/media/8837a0ae1265548e27a2b2bb3ab1f366.png"
     }
 
-    register() {
+    register(registrationValues: any) {
         this.isRegistered = true;
+        return this.http.post('http://localhost:10686/api/Users', registrationValues)
     }
 
     fetchUserRoles() {
-        return this.http.get('https://localhost:44314/api/Roles')
+        return this.http.get('http://localhost:10686/api/Roles')
     }
 }

@@ -11,7 +11,8 @@ import { ActiveRouteService } from '../active-route.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  avatar: string = "../../../assets/defaultProfile.png";
+  //avatar: string = "../../../assets/defaultProfile.png";
+  avatar: string = "assets/defaultProfile.png";
   username: string = "Paradox";
   role: string = "Admin";
   photo: string;
@@ -29,6 +30,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     })
   }
 
+
+  goToProfilePage() {
+    console.log('you are landing to profile page');
+    this.router.navigate(['home/profile']);
+  }
 
   logout() {
     console.log("you are logging out");
