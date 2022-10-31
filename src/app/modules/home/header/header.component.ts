@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   photo: string;
   activeDashboard: any;
   activeRouteServiceSubscription: Subscription;
+  userSubscription: Subscription;
 
   constructor(private router: Router, private authService: AuthService, private activeRouteService: ActiveRouteService) { }
 
@@ -27,6 +28,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     //taking activeDashboard value from dashboard through activeRouteService
     this.activeRouteServiceSubscription = this.activeRouteService.activeDashboard.subscribe(activity => {
       this.activeDashboard = activity;
+    });
+
+    // subscribing to user data from server and extracting username and role
+    this.userSubscription = this.authService.user.subscribe(userData => {
+      this.username = userData.userName;
+      this.role = userData.roleName;
     })
   }
 
@@ -39,6 +46,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout() {
     console.log("you are logging out");
     //change afterwards so that user can logout
+    this.authService.onLogout();
     this.router.navigate(['/login']);
   }
 

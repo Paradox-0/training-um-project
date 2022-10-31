@@ -25,8 +25,18 @@ export class LoginComponent implements OnInit {
 
   onLoginSubmit() {
     if (this.loginForm.valid) {
-      //this.authService.login(this.loginForm.value)
-      console.log(this.loginForm.value);
+      this.authService.login(this.loginForm.value.email, this.loginForm.value.password).subscribe({
+        next: (response) => {
+          console.log(response);
+          console.log(this.loginForm.value);
+          this.router.navigate(['home']);
+        },
+        error: (e) => {
+          console.error(e);
+          console.log('Login Error');
+          alert('Login Error occured')
+        }
+      })
     }
   }
 
