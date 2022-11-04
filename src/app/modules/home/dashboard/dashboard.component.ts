@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { BookDataBaseService } from 'src/app/services/dashboard-services/bookDatabase.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,6 +23,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   copyBookForm: FormGroup;
   bookDataBaseSubscription: Subscription;
   userSubscription: Subscription;
+  graphDataSubscription: Subscription;
+  graphData: any;
   // tableColumns = ['Book Ref.no.', 'Title (Volume)', 'Authors', 'Category (Sub-Category)', 'Total Pages', 'Actions'];
 
   // alertFordeleteBook :- this property is for opening and closing of modal when deleting book.
@@ -39,12 +42,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
     { booksrefno: 1, title: 'The Dhandho', volume: 3, author: 'Mohnish pabrai', category: 'Finance', totalpages: 150 }
   ]
 
-  constructor(private activeRouteService: ActiveRouteService, private toastr: ToastrService, private bookDataBaseService: BookDataBaseService, private authService: AuthService) { }
+  constructor(private activeRouteService: ActiveRouteService, private toastr: ToastrService, private bookDataBaseService: BookDataBaseService, private authService: AuthService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
 
     this.copyBookForm = new FormGroup({
       'pages': new FormControl(50)
+    })
+
+    // card and graph data fetching
+
+    // this.graphDataSubscription = this.bookDataBaseService.getGraphData().subscribe({
+    //   next: (response) => {
+    //     console.log(response);
+    //     this.graphData = response;
+    //     this.totalBooks = this.graphData.totalBooks;
+    //     this.totalAuthors = this.graphData.totalAuthors;
+    //     this.booksWrittenInLast1Y = this.graphData.bookLastYear;
+    //   },
+    //   error: (e) => {
+    //     console.log(e);
+    //     console.log('GraphData error');
+    //   }
+    // })
+
+    //using resolver
+    this.graphDataSubscription = this.activatedRoute.data.subscribe({
+      next: (response) => {
+        console.log(response);
+        this.graphData = response.bookCardData;
+        this.totalBooks = this.graphData.totalBooks;
+        this.totalAuthors = this.graphData.totalAuthors;
+        this.booksWrittenInLast1Y = this.graphData.bookLastYear;
+      },
+      error: (e) => {
+        console.log(e);
+        console.log('GraphData error');
+      }
     })
 
     // fetch the books details from api
@@ -66,6 +100,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.activeRouteService.activeDashboard.next(false);
     this.bookDataBaseSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
+    this.graphDataSubscription.unsubscribe();
   }
 
 
