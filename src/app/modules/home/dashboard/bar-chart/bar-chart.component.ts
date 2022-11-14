@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { ChartConfiguration, ChartType, ChartData } from 'chart.js';
 import { BaseChartDirective } from 'ng2-charts';
 import { Subscription } from 'rxjs';
@@ -21,17 +22,18 @@ export class BarChartComponent implements OnInit {
   //chartCategories: any = [];
   categoriesTotalCount = [65, 59, 80, 81, 56, 55, 40];
 
-  constructor(private bookDataBaseService: BookDataBaseService) { }
+  constructor(private bookDataBaseService: BookDataBaseService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
 
-    this.graphDataSubscription = this.bookDataBaseService.getGraphData().subscribe({
+    //this.graphDataSubscription = this.bookDataBaseService.getGraphData()
+    this.graphDataSubscription = this.bookDataBaseService.getBarChartData().subscribe({
       next: (response) => {
         this.graphData = response;
         console.log(this.graphData);
-        for (let i = 0; i < this.graphData.categoryDetail.length; i++) {
-          this.Categories.push(this.graphData.categoryDetail[i].category);
-          this.CountCategrories.push(this.graphData.categoryDetail[i].noOfBooks);
+        for (let i = 0; i < this.graphData.length; i++) {
+          this.Categories.push(this.graphData[i].categoryName);
+          this.CountCategrories.push(this.graphData[i].categoryBookCount);
         }
         console.log(this.Categories);
         console.log(this.CountCategrories);

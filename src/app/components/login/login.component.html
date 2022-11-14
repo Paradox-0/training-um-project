@@ -1,4 +1,7 @@
 <div class="content-container">
+    <div *ngIf="isLoading" style="text-align: center;" id="loadingSpinner">
+        <app-loading-spinner></app-loading-spinner>
+    </div>
     <div class="card">
         <h3 class="card-header">Login</h3>
         <h4 class="card-title">Sign in to continue</h4>

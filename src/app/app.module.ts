@@ -13,13 +13,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { PasswordComponent } from './components/password/password.component'
 import { ToastrModule } from 'ngx-toastr';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { LoadingSpinnerComponent } from './utility/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    PasswordComponent
+    PasswordComponent,
+    LoadingSpinnerComponent
   ],
   imports: [
     BrowserModule,

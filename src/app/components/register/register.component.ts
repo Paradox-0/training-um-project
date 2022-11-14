@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, ValidatorFn, AbstractControl, ValidationErrors, FormArray } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AgeValidatorService } from 'src/app/services/ageValidator.service';
@@ -13,20 +13,22 @@ import { ToastrService } from 'ngx-toastr';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   emailMobileRequired = false;
   roles: any;
   //roles: any;
   gt = 1;
   registerSubscription: Subscription;
+  userRolesSubscription: Subscription;
   registrationValues: any;
+  isLoading = false;
 
   constructor(private router: Router, private authService: AuthService, private passwordService: PasswordService, private ageValidatorService: AgeValidatorService, private toastr: ToastrService) { }
 
   ngOnInit(): void {
     // push the user role value into the rules array from api service
-    this.authService.fetchUserRoles().subscribe(userRoles => {
+    this.userRolesSubscription = this.authService.fetchUserRoles().subscribe(userRoles => {
       this.roles = userRoles;
       console.log(userRoles);
     })
@@ -53,6 +55,7 @@ export class RegisterComponent implements OnInit {
       return;
     }
     if (this.registerForm.valid) {
+      this.isLoading = true;
       //  this.registerSubscription = this.authService.register()
       this.passwordService.generatePassword();
       this.passwordService.password.subscribe(pass => {
@@ -62,7 +65,7 @@ export class RegisterComponent implements OnInit {
         console.log(this.registrationValues);
       })
       //this.registrationValues.UserId = '1';
-      this.registrationValues.hobbies = 'nthng';
+      //this.registrationValues.hobbies = 'nthng';
       //changing date format to d/m/yyyy
       let dd = this.registrationValues.dob.split('/');
       let temp = dd[1];
@@ -71,10 +74,10 @@ export class RegisterComponent implements OnInit {
       console.log(dd.join("/"));
       //FormData api 
       const formData = new FormData();
-      let userId = '1';
-      formData.append("UserId", userId);
+      //let userId = '1';
+      //formData.append("UserId", userId);
 
-      formData.append("UserName", this.registrationValues.userName);
+      formData.append("Name", this.registrationValues.userName);
 
       formData.append("MobileNo", this.registrationValues.phone);
 
@@ -86,9 +89,9 @@ export class RegisterComponent implements OnInit {
 
       formData.append("Hobbies", this.registrationValues.hobbies);
 
-      formData.append("Profile_Pic", this.registrationValues.profilephoto);
+      formData.append("ProfilePic", this.registrationValues.profilephoto);
 
-      formData.append("Pword", this.registrationValues.password);
+      formData.append("Password", this.registrationValues.password);
 
       formData.append("RoleId", this.registrationValues.role);
 
@@ -97,8 +100,9 @@ export class RegisterComponent implements OnInit {
         console.log(pair[0] + ' - ' + pair[1]);
       }
       //sending user registration request
-      this.authService.register(formData).subscribe({
+      this.registerSubscription = this.authService.register(formData).subscribe({
         next: (response) => {
+          this.isLoading = false;
           console.log(response);
           //toastr for notifying user 
           this.toastr.success('Successfully', 'You have Registered', {
@@ -111,7 +115,9 @@ export class RegisterComponent implements OnInit {
         error: (e) => {
           console.error(e);
           console.log('error_match');
-          alert('error occured')
+          this.toastr.error('Oops, something went wrong. Please try again later', 'Error');
+          //alert('Unable to reach Server');
+          this.isLoading = false;
         }
       })
       //redirecting user to password page
@@ -197,7 +203,17 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
 
+    if (this.registerSubscription) {
+      this.registerSubscription.add(this.userRolesSubscription);
+      this.registerSubscription.unsubscribe();
+    }
+    //below method also works for unsubscription and does not throw an undefined error as it were in above case without if condition
+
+    //this.userRolesSubscription.add(this.registerSubscription);
+    //this.userRolesSubscription.unsubscribe();
+  }
 
 
 }

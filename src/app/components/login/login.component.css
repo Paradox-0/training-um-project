@@ -8,6 +8,17 @@
 
 }
 
+#loadingSpinner {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 999;
+}
+
 .card {
     max-width: 400px;
     padding: 10px;

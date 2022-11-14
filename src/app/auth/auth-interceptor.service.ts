@@ -1,6 +1,6 @@
 import { HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { exhaustMap, Observable, take } from "rxjs";
+import { exhaustMap, Observable, retry, take } from "rxjs";
 import { AuthService } from "../services/auth.service";
 
 @Injectable({

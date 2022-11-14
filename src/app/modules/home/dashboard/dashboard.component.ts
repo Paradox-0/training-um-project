@@ -6,11 +6,13 @@ import { BookDataBaseService } from 'src/app/services/dashboard-services/bookDat
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { addBook } from '../animation';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
+  animations: [addBook]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   totalBooks: any = 500;
@@ -73,7 +75,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.graphData = response.bookCardData;
         this.totalBooks = this.graphData.totalBooks;
         this.totalAuthors = this.graphData.totalAuthors;
-        this.booksWrittenInLast1Y = this.graphData.bookLastYear;
+        this.booksWrittenInLast1Y = this.graphData.booksInLastYear;
       },
       error: (e) => {
         console.log(e);
@@ -87,6 +89,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       // this.totalBooks = //bookDetails.variable nameWhich is storing total books;
       //  this.totalAuthors = //bookDetails.variable nameWhich is storing total Authors;
       //  this.booksWrittenInLast1Y = //bookDetails.variable name which is storing books written in last 1 year;
+      console.log(bookDetails);
     })
 
     this.activeRouteService.activeDashboard.next(true);
@@ -168,8 +171,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.bookDatabase.splice(index, 1);
   }
-
-
 
 
 }

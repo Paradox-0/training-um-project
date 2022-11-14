@@ -16,6 +16,13 @@
 
     /* border: 1px solid rgb(21, 1, 73); */
     border-radius: 10px;
+    transition: all 500ms ease;
+}
+
+.bookCard:hover,
+.chart:hover {
+    transform: scale(1.05);
+    /* z-index: 999; */
 }
 
 h4.card-title {

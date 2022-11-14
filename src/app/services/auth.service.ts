@@ -1,18 +1,26 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, tap } from "rxjs";
+import { BehaviorSubject, catchError, tap, throwError } from "rxjs";
 import { User } from "../models/user.model";
 
 
 interface LoginResponseData {
     // data receiving from login api end point
-    userName: string;
+    // userName: string;
+    // userId: number;
+    // roleName?: any;
+    // token: string;
+    // profilePic: string;
+    name: string;
     userId: number;
-    roleName?: any;
     token: string;
-    profilePic: string;
+    ProfilePicPath: string;
+    roleName?: any;
 }
 
+const userRolesURL = "http://localhost:29507/api/Roles";
+const loginURL = "http://localhost:29507/api/Login";
+const registerURL = "http://localhost:29507/api/Users";
 
 @Injectable({
     providedIn: "root"
@@ -25,17 +33,18 @@ export class AuthService {
 
     constructor(private http: HttpClient) { }
 
-
+    //http://localhost:10686/api/Token
     login(email: string, password: string) {
         this.isAuthenticated = true;
-        return this.http.post<LoginResponseData>('http://localhost:10686/api/Token', {
-            Login: email,
-            Pword: password
+        return this.http.post<LoginResponseData>(loginURL, {
+            login: email,
+            password: password
         })
             .pipe(
+                catchError(this.handleError),
                 tap(resData => {
                     this.handleAuthentication(
-                        resData.userName,
+                        resData.name,
                         resData.userId,
                         resData.token,
                         resData.roleName
@@ -77,14 +86,14 @@ export class AuthService {
         }
     }
 
-
+    //http://localhost:10686/api/Users
     register(registrationValues: any) {
         this.isRegistered = true;
-        return this.http.post('http://localhost:10686/api/Users', registrationValues)
+        return this.http.post(registerURL, registrationValues)
     }
-
+    //http://localhost:10686/api/Roles
     fetchUserRoles() {
-        return this.http.get('http://localhost:10686/api/Roles')
+        return this.http.get(userRolesURL)
     }
 
     onLogout() {
@@ -106,5 +115,16 @@ export class AuthService {
         localStorage.setItem('userData', JSON.stringify(user));
         console.log(user);
         this.user.next(user);
+    }
+
+    private handleError(errorRes: HttpErrorResponse) {
+        let errorMessage = 'Oops, something went wrong. Please try again later';
+        if (errorRes.statusText !== "Bad Request") {
+            return throwError(() => errorMessage);
+        }
+        else {
+            errorMessage = "Invalid Credentials";
+        }
+        return throwError(() => errorMessage);
     }
 }

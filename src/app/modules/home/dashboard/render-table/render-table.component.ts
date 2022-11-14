@@ -18,12 +18,7 @@ export class RenderTableComponent implements OnInit, OnDestroy {
   bookDataBaseSubscription: Subscription;
 
   //we will store booksdata from booksDatabase into below array
-  booksData: any = [
-    { booksrefno: 1, title: 'The Dhandho', volume: 1, author: 'Mohnish pabrai', category: 'Finance', totalpages: 320 },
-    { booksrefno: 2, title: 'Atomic Habits', volume: 1, author: 'James Clear', category: 'Self-help', totalpages: 450 },
-    { booksrefno: 1, title: 'The Dhandho', volume: 2, author: 'Mohnish pabrai', category: 'Finance', totalpages: 300 },
-    { booksrefno: 1, title: 'The Dhandho', volume: 3, author: 'Mohnish pabrai', category: 'Finance', totalpages: 150 }
-  ];
+  booksData: any = [];
 
   constructor(private bookDataBaseService: BookDataBaseService) { }
 

@@ -15,20 +15,20 @@
         <!-- table column values row vise -->
         <clr-dg-row *ngFor="let book of booksData;let i=index">
             <!-- book ref no. -->
-            <clr-dg-cell>{{book.booksrefno}}</clr-dg-cell>
+            <clr-dg-cell>{{book.bookReferenceNo}}</clr-dg-cell>
 
             <!-- title and volume -->
-            <clr-dg-cell>{{book.title}} ({{book.volume}})</clr-dg-cell>
+            <clr-dg-cell>{{book.title}} ({{book.numberOfVolume}})</clr-dg-cell>
 
 
             <!-- author  -->
-            <clr-dg-cell>{{book.author}}</clr-dg-cell>
+            <clr-dg-cell>{{book.authors[0].authorName}}</clr-dg-cell>
 
             <!-- category and sub-category -->
-            <clr-dg-cell>{{book.category}}</clr-dg-cell>
+            <clr-dg-cell>{{book.category.categoryName}}({{book.subCategory.subCategoryName}})</clr-dg-cell>
 
             <!-- total pages -->
-            <clr-dg-cell>{{book.totalpages}}</clr-dg-cell>
+            <clr-dg-cell>{{book.numberOfPages}}</clr-dg-cell>
 
             <!-- actions -->
             <clr-dg-cell>

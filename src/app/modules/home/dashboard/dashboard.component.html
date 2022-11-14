@@ -43,7 +43,7 @@
 
 
             <!-- table column values row vise -->
-            <clr-dg-row *clrDgItems="let book of bookDatabase;let i=index">
+            <clr-dg-row *clrDgItems="let book of bookDatabase;let i=index" [@addBook]>
                 <!-- book ref no. -->
                 <clr-dg-cell>{{book.booksrefno}}</clr-dg-cell>
 
